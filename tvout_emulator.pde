@@ -112,15 +112,18 @@ void setup() {
   //tv.print("Hola"); // DEBUG - test
 
   //tv.print(123, 10); // DEBUG - test
+  //tv.print(123, DEC); // DEBUG - test
   //tv.print(123, 2); // DEBUG - test
+  //tv.print(123, BIN); // DEBUG - test
   //tv.print(123, 16); // DEBUG - test
+  //tv.print(123, HEX); // DEBUG - test
   //tv.print(123); // DEBUG - test
   //tv.print(12.5); // DEBUG - test
-  //tv.print(12.5,2); // DEBUG - test
+  //tv.print(12.5, 2); // DEBUG - test
   //tv.print(12.5, 10); // DEBUG - test
-  //tv.println(12.5,2); // DEBUG - test
+  //tv.println(12.5, 2); // DEBUG - test
   //tv.println(123); // DEBUG - test
-  tv.println(12.5); // DEBUG - test
+  //tv.println(12.5); // DEBUG - test
   
 
 }
@@ -129,6 +132,8 @@ void setup() {
 void draw() {
 
   //tv.shift(1, DIR_RIGHT); // DEBUG
+  
+  mode_rotate();
 
   // Always do the following at the end of draw():
   tv.drawTVoutScreen();
