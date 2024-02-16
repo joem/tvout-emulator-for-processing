@@ -64,7 +64,7 @@ void settings() {
 }
 
 void setup() {
-  tv.printInfo();
+  //tv.printInfo(); // this broke
   tv.fill(BLACK);
   colorMode(RGB, 1.0, 1.0, 1.0);
   //noLoop(); // Run draw() once and only once. // DEBUG
@@ -109,7 +109,16 @@ void setup() {
   //tv.write("Hola"); // DEBUG - test
   //tv.write_row(int('A'), 0, 8);
   //tv.write_row("HELLO", 0, 4);
-  tv.print("Hola"); // DEBUG - test
+  //tv.print("Hola"); // DEBUG - test
+
+  tv.print(123, 10); // DEBUG - test
+
+  // NOT WORKING RIGHT!!! NEED TO FIX THE CODE!!!!
+  //tv.print(123); // DEBUG - test
+  //tv.println(123); // DEBUG - test
+  //tv.print(12.5,2); // DEBUG - test
+  //tv.print(12.5, 10); // DEBUG - test
+  //tv.println(12.5,2); // DEBUG - test
 
 }
 

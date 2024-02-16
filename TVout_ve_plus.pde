@@ -1102,24 +1102,19 @@ class TVout_ve_plus {
   //************************************************************ print() with base
 
   void print(char c, int base) {
-    this.print((long) c, base);
+    this.print((int) c, base);
   }
   
   
   // SKIPPED
   //void print(unsigned char b, int base)
   
-  
-  void print(int n, int base) {
-    this.print((long) n, base);
-  }
-
 
   // SKIPPED
   //void print(unsigned int n, int base)
   
   
-  void print(long n, int base) {
+  void print(int n, int base) {
     if (base == 0) {
       write(int(n)); // My change, since base 0 doesn't make any sense
     } else if (base == 10) {
@@ -1138,11 +1133,6 @@ class TVout_ve_plus {
   //void print(unsigned long n, int base)
 
   
-  void print(double n, int digits) {
-    printFloat(n, digits);
-  }
-
-
   void print(float n, int digits) {
     printFloat(n, digits);
   }
@@ -1244,12 +1234,6 @@ class TVout_ve_plus {
     println();
   }
 
-  
-  void println(double n, int digits)
-  {
-    print(n, digits);
-    println();
-  }
 
   //************************************************************ printPGM()
 
@@ -1339,7 +1323,7 @@ class TVout_ve_plus {
   void print(int x, int y, char c, int base) {
     cursor_x = x;
     cursor_y = y;
-    print((long) c, base);
+    print((int) c, base);
   }
 
   // SKIPPED
@@ -1348,7 +1332,7 @@ class TVout_ve_plus {
   void print(int x, int y, int n, int base) {
     cursor_x = x;
     cursor_y = y;
-    print((long) n, base);
+    print((int) n, base);
   }
 
   // SKIPPED
@@ -1363,14 +1347,192 @@ class TVout_ve_plus {
   // SKIPPED
   //void print(uint8_t x, uint8_t y, unsigned long n, int base)
   
-  void print(int x, int y, double n, int digits) {
+  void print(int x, int y, float n, int digits) {
     cursor_x = x;
     cursor_y = y;
     print(n,digits);
   }
 
+  //************************************************************ print_row() with x,y
+
+  /*
+   *TODO: Document this function.
+   *
+   *
+   */
+  void print_row(int x, int y, char str[], int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    write_row(str, row, lines);
+  }
+  
+  // ADDED FOR PROCESSING
+  void print_row(int x, int y, int str[], int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    write_row(str, row, lines);
+  }
+  
+  // ADDED FOR PROCESSING
+  void print_row(int x, int y, String str, int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    write_row(str, row, lines);
+  }
+
+  //************************************************************ println() with x,y
+
+  void println(int x, int y, char[] c)
+  {
+    cursor_x = x;
+    cursor_y = y;
+    print(c);
+    println();
+  }
+  
+  void println(int x, int y, int[] c)
+  {
+    cursor_x = x;
+    cursor_y = y;
+    print(c);
+    println();
+  }
+  
+  void println(int x, int y, String str)
+  {
+    cursor_x = x;
+    cursor_y = y;
+    print(str);
+    println();
+  }
 
 
+  //************************************************************ println() with x,y and base
+
+  void println(int x, int y, char c, int base)
+  {
+    cursor_x = x;
+    cursor_y = y;
+    print(c, base);
+    println();
+  }
+
+  // SKIPPED
+  //void TVout_ve_plus::println(uint8_t x, uint8_t y, unsigned char b, int base)
+
+  void println(int x, int y, int n, int base) {
+    cursor_x = x;
+    cursor_y = y;
+    print(n, base);
+    println();
+  }
+
+  // SKIPPED
+  //void TVout_ve_plus::println(uint8_t x, uint8_t y, unsigned int n, int base)
+
+  void println(int x, int y, long n, int base) {
+    cursor_x = x;
+    cursor_y = y;
+    print(n, base);
+    println();
+  }
+
+  // SKIPPED
+  //void TVout_ve_plus::println(uint8_t x, uint8_t y, unsigned long n, int base)
+  
+  void println(int x, int y, float n, int digits) {
+    cursor_x = x;
+    cursor_y = y;
+    print(n, digits);
+    println();
+  }
+
+  //************************************************************ println_row() with x,y
+
+  /*
+   *TODO: Document this function.
+   *
+   *
+   */
+  void println_row(int x, int y, char[] c, int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    print_row(c, row, lines);
+    println();
+  }
+
+  // ADDED FOR PROCESSING
+  void println_row(int x, int y, int[] c, int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    print_row(c, row, lines);
+    println();
+  }
+
+  // ADDED FOR PROCESSING
+  void println_row(int x, int y, String str, int row, int lines) {
+    cursor_x = x;
+    cursor_y = y;
+    print_row(str, row, lines);
+    println();
+  }
+
+
+  void printNumber(int n, int base) {
+    //unsigned char buf[8 * sizeof(long)]; // Assumes 8-bit chars.
+    int[] buf = new int[8*2];
+    int i = 0;
+  
+    if (n == 0) {
+      print('0');
+      return;
+    }
+  
+    while (n > 0) {
+      buf[i++] = n % base;
+      n /= base;
+    }
+  
+    for (; i > 0; i--)
+      print((char) (buf[i - 1] < 10 ?
+        '0' + buf[i - 1] :
+        'A' + buf[i - 1] - 10));
+  }
+
+
+  void printFloat(float number, int digits) {
+    // Handle negative numbers
+    if (number < 0.0) {
+       print('-');
+       number = -number;
+    }
+  
+    // Round correctly so that print(1.999, 2) prints as "2.00"
+    float rounding = 0.5;
+    for (int i=0; i<digits; ++i) {
+      rounding /= 10.0;
+    }
+    
+    number += rounding;
+  
+    // Extract the integer part of the number and print it
+    int int_part = (int)number;
+    float remainder = number - (float)int_part;
+    print(int_part);
+  
+    // Print the decimal point, but only if there are digits beyond
+    if (digits > 0) {
+      print(".");
+    }
+    
+    // Extract digits from the remainder one at a time
+    while (digits-- > 0) {
+      remainder *= 10.0;
+      int toPrint = int(remainder);
+      print(toPrint);
+      remainder -= toPrint;
+    }
+  }
 
 
 
@@ -1395,11 +1557,14 @@ class TVout_ve_plus {
   // *********************************************************************
   // *********************************************************************
 
-  // Print some info to the console for debugging purposes
-  void printInfo() {
-    println("Length of screen array: ", screen.length);
-    //TODO add more info
-  }
+  // I guess this can't work inside the class??
+  // Or I just don't know how to call processing's println instead of the class's println.
+  //
+  //// Print some info to the console for debugging purposes
+  //void printInfo() {
+  //  println("Length of screen array: ", screen.length);
+  //  //TODO add more info
+  //}
 
   // 
   void drawTVoutScreen() {
