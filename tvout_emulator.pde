@@ -111,14 +111,17 @@ void setup() {
   //tv.write_row("HELLO", 0, 4);
   //tv.print("Hola"); // DEBUG - test
 
-  tv.print(123, 10); // DEBUG - test
-
-  // NOT WORKING RIGHT!!! NEED TO FIX THE CODE!!!!
+  //tv.print(123, 10); // DEBUG - test
+  //tv.print(123, 2); // DEBUG - test
+  //tv.print(123, 16); // DEBUG - test
   //tv.print(123); // DEBUG - test
-  //tv.println(123); // DEBUG - test
+  //tv.print(12.5); // DEBUG - test
   //tv.print(12.5,2); // DEBUG - test
   //tv.print(12.5, 10); // DEBUG - test
   //tv.println(12.5,2); // DEBUG - test
+  //tv.println(123); // DEBUG - test
+  tv.println(12.5); // DEBUG - test
+  
 
 }
 

@@ -838,7 +838,6 @@ class TVout_ve_plus {
   // From TVout_ve_plusPrint:
   // *********************************************************************
 
-
   void select_font(int[] f) {
     font = f;
   }
@@ -859,6 +858,7 @@ class TVout_ve_plus {
   void print_char(int x, int y, char c) {
     print_char(x, y, int(c));
   }
+
 
   /*
    * Print a row of a character from the currently selected font at x,y.
@@ -898,7 +898,6 @@ class TVout_ve_plus {
     }
   }
   
-  
   /* default implementation: may be overridden */
   void write(int[] buffer, int size) {
     //while (size--)
@@ -907,7 +906,6 @@ class TVout_ve_plus {
       write(buffer[i]);
     }
   }
-
 
   // Added just for Processing
   void write(int[] buffer) {
@@ -918,7 +916,6 @@ class TVout_ve_plus {
     }
   }
 
-
   // Added just for Processing
   void write(String str) {
     for (int i = 0; i < str.length(); i++) {
@@ -926,11 +923,9 @@ class TVout_ve_plus {
     }
   }
 
-
   void write(char c) {
     write(int(c));
   }
-
 
   void write(int c) {
     switch(c) {
@@ -980,7 +975,6 @@ class TVout_ve_plus {
     }
   }
 
-
   void write_row(char[] str, int row, int lines) {
     //while (*str)
     //  write_row(*str++, row, lines);
@@ -988,7 +982,6 @@ class TVout_ve_plus {
       write_row(int(str[i]), row, lines);
     }
   }
-
 
   /*
    *TODO: Document this function.
@@ -1055,16 +1048,6 @@ class TVout_ve_plus {
     write(str);
   }
 
-
-  void print(char c) {
-    write(c);
-  }
-
-  // ADDED FOR PROCESSING
-  void print(int c) {
-    write(c);
-  }
-
   // ADDED FOR PROCESSING
   void print(int[] c) {
     write(c);
@@ -1087,12 +1070,10 @@ class TVout_ve_plus {
     write_row(str, row, lines);
   }
 
-
   // ADDED FOR PROCESSING
   void print_row(int[] c, int row, int lines) {
     write_row(c, row, lines);
   }
-
 
   // ADDED FOR PROCESSING
   void print_row(String str, int row, int lines) {
@@ -1105,14 +1086,15 @@ class TVout_ve_plus {
     this.print((int) c, base);
   }
   
-  
+  void print(char c) {
+    this.print((int) c, BYTE);
+  }
+
   // SKIPPED
   //void print(unsigned char b, int base)
   
-
   // SKIPPED
   //void print(unsigned int n, int base)
-  
   
   void print(int n, int base) {
     if (base == 0) {
@@ -1127,14 +1109,21 @@ class TVout_ve_plus {
       printNumber(n, base);
     }
   }
-  
-  
+
+  // ADDED FOR PROCESSING
+  void print(int c) {
+    this.print((int) c, DEC);
+  }
+
   // SKIPPED
   //void print(unsigned long n, int base)
 
-  
   void print(float n, int digits) {
     printFloat(n, digits);
+  }
+
+  void print(float n) {
+    printFloat(n, 2);
   }
 
   //************************************************************ println()
@@ -1144,19 +1133,16 @@ class TVout_ve_plus {
     this.print('\n');
   }
   
-  
   void println(char[] c) {
     this.print(c);
     this.println();
   }
-
 
   // ADDED FOR PROCESSING
   void println(int[] c) {
     this.print(c);
     this.println();
   }
-
 
   // ADDED FOR PROCESSING
   void println(String str) {
@@ -1171,69 +1157,69 @@ class TVout_ve_plus {
    *
    *
    */
-  void println_row(char[] c, int row, int lines)
-  {
+  void println_row(char[] c, int row, int lines) {
     print_row(c, row, lines);
     println();                  //FIXME: Might need to do something about this?
   }
 
-
   // ADDED FOR PROCESSING
-  void println_row(int[] c, int row, int lines)
-  {
+  void println_row(int[] c, int row, int lines) {
     print_row(c, row, lines);
     println();                  //FIXME: Might need to do something about this?
   }
 
-
   // ADDED FOR PROCESSING
-  void println_row(String str, int row, int lines)
-  {
+  void println_row(String str, int row, int lines) {
     print_row(str, row, lines);
     println();                  //FIXME: Might need to do something about this?
   }
 
   //************************************************************ println() with base
   
-  void println(char c, int base)
-  {
+  void println(char c, int base) {
     print(c, base);
     println();
   }
 
+  void println(char c) {
+    println(c, BYTE);
+  }
 
   // SKIPPED
   //void println(unsigned char b, int base)
   
-  
-  void println(int n, int base)
-  {
+  void println(int n, int base) {
     print(n, base);
     println();
   }
-  
+
+  void println(int n) {
+    println(n, DEC);
+  }
   
   // SKIPPED
   //void println(unsigned int n, int base)
   
-  
-  void println(long n, int base)
-  {
+  void println(long n, int base) {
     print(n, base);
     println();
   }
-  
-  
+
+  void println(long n) {
+    println(n, DEC);
+  }
+
   // SKIPPED
   //void TVout_ve_plus::println(unsigned long n, int base)
 
-
-  void println(float n, int digits)
-  {
+  void println(float n, int digits) {
     print(n, digits);
     println();
   }
 
+  void println(float n) {
+    println(n, 2);
+  }
 
   //************************************************************ printPGM()
 
@@ -1248,7 +1234,6 @@ class TVout_ve_plus {
     }
   }
 
-
   // ADDED FOR PROCESSING
   void printPGM(int[] str) {
     //char c;
@@ -1260,7 +1245,6 @@ class TVout_ve_plus {
       write(str[i]);
     }
   }
-  
   
   void printPGM(int x, int y, char[] str) {
     //char c;
@@ -1275,7 +1259,6 @@ class TVout_ve_plus {
     }
   }
 
-
   // ADDED FOR PROCESSING
   void printPGM(int x, int y, int[] str) {
     //char c;
@@ -1289,7 +1272,6 @@ class TVout_ve_plus {
       write(str[i]);
     }
   }
-  
   
   void set_cursor(int x, int y) {
     cursor_x = x;
@@ -1326,6 +1308,10 @@ class TVout_ve_plus {
     print((int) c, base);
   }
 
+  void print(int x, int y, char c) {
+    print(x, y, c, BYTE);
+  }
+
   // SKIPPED
   //void TVout_ve_plus::print(uint8_t x, uint8_t y, unsigned char b, int base)
   
@@ -1333,6 +1319,10 @@ class TVout_ve_plus {
     cursor_x = x;
     cursor_y = y;
     print((int) n, base);
+  }
+
+  void print(int x, int y, int n) {
+    print(x, y, n, DEC);
   }
 
   // SKIPPED
@@ -1343,7 +1333,11 @@ class TVout_ve_plus {
     cursor_y = y;
     print(n,base);
   }
-  
+
+  void print(int x, int y, long n) {
+    print(x, y, n, DEC);
+  }
+
   // SKIPPED
   //void print(uint8_t x, uint8_t y, unsigned long n, int base)
   
@@ -1351,6 +1345,10 @@ class TVout_ve_plus {
     cursor_x = x;
     cursor_y = y;
     print(n,digits);
+  }
+
+  void print(int x, int y, float n) {
+    print(x, y, n, 2);
   }
 
   //************************************************************ print_row() with x,y
@@ -1382,39 +1380,38 @@ class TVout_ve_plus {
 
   //************************************************************ println() with x,y
 
-  void println(int x, int y, char[] c)
-  {
+  void println(int x, int y, char[] c) {
     cursor_x = x;
     cursor_y = y;
     print(c);
     println();
   }
   
-  void println(int x, int y, int[] c)
-  {
+  void println(int x, int y, int[] c) {
     cursor_x = x;
     cursor_y = y;
     print(c);
     println();
   }
   
-  void println(int x, int y, String str)
-  {
+  void println(int x, int y, String str) {
     cursor_x = x;
     cursor_y = y;
     print(str);
     println();
   }
 
-
   //************************************************************ println() with x,y and base
 
-  void println(int x, int y, char c, int base)
-  {
+  void println(int x, int y, char c, int base) {
     cursor_x = x;
     cursor_y = y;
     print(c, base);
     println();
+  }
+
+  void println(int x, int y, char c) {
+    println(x, y, c, BYTE);
   }
 
   // SKIPPED
@@ -1427,6 +1424,10 @@ class TVout_ve_plus {
     println();
   }
 
+  void println(int x, int y, int n) {
+    println(x, y, n, DEC);
+  }
+
   // SKIPPED
   //void TVout_ve_plus::println(uint8_t x, uint8_t y, unsigned int n, int base)
 
@@ -1437,6 +1438,10 @@ class TVout_ve_plus {
     println();
   }
 
+  void println(int x, int y, long n) {
+    println(x, y, n, DEC);
+  }
+
   // SKIPPED
   //void TVout_ve_plus::println(uint8_t x, uint8_t y, unsigned long n, int base)
   
@@ -1445,6 +1450,10 @@ class TVout_ve_plus {
     cursor_y = y;
     print(n, digits);
     println();
+  }
+
+  void println(int x, int y, float n) {
+    println(x, y, n, 2);
   }
 
   //************************************************************ println_row() with x,y
@@ -1477,7 +1486,6 @@ class TVout_ve_plus {
     println();
   }
 
-
   void printNumber(int n, int base) {
     //unsigned char buf[8 * sizeof(long)]; // Assumes 8-bit chars.
     int[] buf = new int[8*2];
@@ -1498,7 +1506,6 @@ class TVout_ve_plus {
         '0' + buf[i - 1] :
         'A' + buf[i - 1] - 10));
   }
-
 
   void printFloat(float number, int digits) {
     // Handle negative numbers
@@ -1533,22 +1540,6 @@ class TVout_ve_plus {
       remainder -= toPrint;
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   // *********************************************************************
